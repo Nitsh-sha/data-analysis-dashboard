@@ -13,18 +13,9 @@ df = pd.read_csv("hotel_booking.csv")
 st.write("First few rows of the dataset:")
 st.dataframe(df.head())
 
-# Checkbox to filter the data for specific hotel types
-hotel_types = st.multiselect("Select Hotel Types", df["hotel"].unique())
-filtered_df = df[df["hotel"].isin(hotel_types)]
-st.write("Filtered Data:")
-st.dataframe(filtered_df)
-
-# Checkbox to toggle the display of data description
-show_data_description = st.checkbox("Show Data Description")
-if show_data_description:
-    # Describe the data
-    st.write("Data description:")
-    st.dataframe(df.describe())
+# Describe the data
+st.write("Data description:")
+st.dataframe(df.describe())
 
 # Fill missing values in the 'children' column with 0
 df['children'].fillna(0, inplace=True)
@@ -59,11 +50,8 @@ df.drop(["name", "email", "phone-number", "credit_card"], axis=1, inplace=True)
 df = df[df["adr"] > 0]
 
 # Create a histogram of lead time to see the distribution of booking lead times
-# Checkbox to modify the lead time histogram
-show_cumulative = st.checkbox("Show Cumulative Histogram")
-fig1 = px.histogram(df, x="lead_time", nbins=50, title="Distribution of Booking Lead Time", cumulative=show_cumulative)
+fig1 = px.histogram(df, x="lead_time", nbins=50, title="Distribution of Booking Lead Time")
 st.plotly_chart(fig1)
-
 
 # Histogram: ADR distribution, faceted by arrival month
 fig2 = px.histogram(df, x='adr', color='arrival_date_month', nbins=50, facet_col='arrival_date_month',
@@ -76,18 +64,11 @@ fig3 = px.histogram(df, x='lead_time', color='hotel', nbins=50, facet_col='hotel
 st.plotly_chart(fig3)
 
 # Scatter plot: Lead Time vs. ADR
-# Checkbox to change the color scale of the scatter plot
-use_custom_color = st.checkbox("Use Custom Color Scale")
 fig4 = px.scatter(df, x='lead_time', y='adr', title='Lead Time vs. ADR', labels={'lead_time': 'Lead Time', 'adr': 'ADR'})
-if use_custom_color:
-    fig4.update_traces(marker=dict(color='orange'))
 st.plotly_chart(fig4)
 
 # Scatter plot: Total Guests vs. Stays in Week Nights
-show_scatter_plot = st.checkbox("Show Scatter Plot: Total Guests vs. Stays in Week Nights")
-
-if show_scatter_plot:
-    fig5 = px.scatter(df, x='total_guests', y='stays_in_week_nights',
-                      title='Total Guests vs. Stays in Week Nights',
-                      labels={'total_guests': 'Total Guests', 'stays_in_week_nights': 'Stays in Week Nights'})
-    st.plotly_chart(fig5)
+fig5 = px.scatter(df, x='total_guests', y='stays_in_week_nights',
+                  title='Total Guests vs. Stays in Week Nights',
+                  labels={'total_guests': 'Total Guests', 'stays_in_week_nights': 'Stays in Week Nights'})
+st.plotly_chart(fig5)
