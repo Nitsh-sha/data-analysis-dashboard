@@ -13,9 +13,15 @@ df = pd.read_csv("hotel_booking.csv")
 st.write("First few rows of the dataset:")
 st.dataframe(df.head())
 
-# Checkbox to filter the data for specific hotel types
-hotel_types = st.multiselect("Select Hotel Types", df["hotel"].unique())
-filtered_df = df[df["hotel"].isin(hotel_types)]
+# Checkbox to filter the data for specific month(s)
+selected_months = st.multiselect("Select Month(s)", df["arrival_date_month"].unique())
+filtered_df = df[df["arrival_date_month"].isin(selected_months)]
+
+# Checkbox to filter the data for specific hotel type(s)
+selected_hotels = st.multiselect("Select Hotel Types", df["hotel"].unique())
+filtered_df = filtered_df[filtered_df["hotel"].isin(selected_hotels)]
+
+# Display the filtered data
 st.write("Filtered Data:")
 st.dataframe(filtered_df)
 
