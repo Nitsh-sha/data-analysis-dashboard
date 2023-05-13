@@ -57,3 +57,7 @@ All the necessary dependencies are listed in the `requirements.txt` file.
 ## Contributing
 
 Contributions to this project are welcome! If you encounter any issues or have suggestions for improvements, please open an issue or submit a pull request.
+
+## References
+Hotel dataset from:
+https://www.kaggle.com/datasets/mojtaba142/hotel-booking?select=hotel_booking.csv
